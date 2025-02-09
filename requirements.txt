@@ -1,0 +1,10 @@
+jupyter
+ipykernel
+pandas
+numpy
+holoviews
+matplotlib
+statsmodels
+pyarrow
+wfdb
+websockets
