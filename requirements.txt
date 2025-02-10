@@ -8,3 +8,5 @@ statsmodels
 pyarrow
 wfdb
 websockets
+boleh
+bokeh_sampledata
