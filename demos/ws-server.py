@@ -1,16 +1,18 @@
-import asyncio
-import websockets
+"""Echo server using the asyncio API."""
 
-# Define the WebSocket server handler
-async def echo(websocket, path):
+import asyncio
+from websockets.asyncio.server import serve
+
+
+async def echo(websocket):
     async for message in websocket:
-        # Echo the received message back to the client
         await websocket.send(message)
 
-# Start the WebSocket server
-start_server = websockets.serve(echo, "localhost", 8765)
 
-# Run the server indefinitely
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+async def main():
+    async with serve(echo, "localhost", 8765) as server:
+        await server.serve_forever()
 
+
+if __name__ == "__main__":
+    asyncio.run(main())
