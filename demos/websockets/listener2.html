@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Real-Time Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Real-Time Sine Wave</h1>
+    <canvas id="sineChart"></canvas>
+
+    <script>
+        const ctx = document.getElementById('sineChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],  // Time values
+                datasets: [{
+                    label: 'Sine Wave',
+                    data: [],  // Sine wave values
+                    borderColor: 'blue',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: "Time" } },
+                    y: { title: { display: true, text: "Value" } }
+                }
+            }
+        });
+
+        const ws = new WebSocket("ws://localhost:8765");
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            chart.data.labels.push(data.time);
+            chart.data.datasets[0].data.push(data.value);
+
+            if (chart.data.labels.length > 50) {
+                chart.data.labels.shift();
+                chart.data.datasets[0].data.shift();
+            }
+
+            chart.update();
+        };
+
+        ws.onopen = function() { console.log("Connected to WebSocket server"); };
+        ws.onclose = function() { console.log("WebSocket closed"); };
+    </script>
+</body>
+</html>

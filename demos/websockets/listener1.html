@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Demo</title>
+</head>
+<body>
+    <h1>WebSocket Data</h1>
+    <div id="data"></div>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:8765");
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            document.getElementById("data").innerText = "Received: " + data.value;
+        };
+
+        ws.onopen = function() {
+            console.log("Connected to WebSocket server");
+        };
+
+        ws.onclose = function() {
+            console.log("WebSocket closed");
+        };
+    </script>
+</body>
+</html>
