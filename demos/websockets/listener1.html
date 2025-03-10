@@ -10,20 +10,20 @@
     <div id="data"></div>
 
     <script>
-        const ws = new WebSocket("ws://localhost:8765");
+        const ws = new WebSocket("ws://localhost:8765")
 
         ws.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-            document.getElementById("data").innerText = "Received: " + data.value;
+            const data = JSON.parse(event.data)
+            document.getElementById("data").innerText = `Received: ${data.value}`
         };
 
         ws.onopen = function() {
             console.log("Connected to WebSocket server");
-        };
+        }
 
         ws.onclose = function() {
             console.log("WebSocket closed");
-        };
+        }
     </script>
 </body>
 </html>
