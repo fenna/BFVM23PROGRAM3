@@ -21,7 +21,7 @@ async def receive_data():
                 print("WebSocket closed")
                 break
 
-def animate(frame):
+def plot_data(frame):
     """Update the Matplotlib plot with new data."""
     global df
     if not df.empty:
@@ -39,10 +39,10 @@ def animate(frame):
 async def main():
     """Run the WebSocket listener and Matplotlib event loop together."""
     task = asyncio.create_task(receive_data())  
-    ani = animation.FuncAnimation(fig, animate, interval=100, save_count=max_save)
+    ani = animation.FuncAnimation(fig, plot_data, interval=100, save_count=max_save)
     plt.show(block=False)
 
-    while True:
+    while True: # kind of round-robin scheduling
         await asyncio.sleep(0.1)  # Keep async loop running for WebSocket data
         plt.pause(0.01)  # Allow Matplotlib to update the plot
 
