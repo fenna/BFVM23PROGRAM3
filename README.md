@@ -1,6 +1,6 @@
-# Programming IV
+# Programming III
 
-Data processing Programming IV course for the master Data Science for Life Science. See also [Time Series](https://fennaf.gitbook.io/bfvm22prog1/time-series) and [Streaming Data](https://fennaf.gitbook.io/bfvm22prog1/streaming-data).
+Data processing Programming III course for the master Data Science for Life Science. See also [Time Series](https://fennaf.gitbook.io/bfvm22prog1/time-series) and [Streaming Data](https://fennaf.gitbook.io/bfvm22prog1/streaming-data).
 
 This repo has the following directories:
 
