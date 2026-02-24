@@ -2,7 +2,6 @@ import argparse
 import asyncio
 from typing import List
 import websockets
-from prompt_toolkit.enums import DEFAULT_BUFFER
 
 DEFAULT_HOSTNAME = "localhost"
 DEFAULT_PORT = 8080
@@ -78,7 +77,7 @@ async def main(hostname, port, file_path) -> None:
     incoming connections using `handle_connection`.
     """
     async with websockets.serve(
-        lambda ws, _: handle_connection(ws, file_path), hostname, port
+        lambda ws: handle_connection(ws, file_path), hostname, port
     ):
         print(f"WebSocket server running on {hostname}:{port} streaming '{file_path}'")
         await asyncio.Future()  # Run forever
