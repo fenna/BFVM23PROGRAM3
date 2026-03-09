@@ -1,5 +1,6 @@
 import numpy as np
 import wfdb 
+import math
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from scipy.signal import butter, filtfilt
@@ -8,7 +9,7 @@ from river import drift
 from streaming_rr import StreamingRR_XQRS
 from helper_functions import insert_pvc
 from plot_functions import setup_ecg_plot   
-from cusum import CusumDetector
+
 
 
 #  Load a clean record and inject a PVC burst
@@ -35,10 +36,11 @@ cp_detector = drift.PageHinkley(threshold=12.5, delta=0.005)
 fig, ax, ecg_line, peak_scatter, cp_vline = setup_ecg_plot(sig)
 
 # Animation parameters (20 ms per frame → ~50 fps)
-CHUNK_DURATION_SEC = 0.002
-CHUNK_SIZE = int(fs * CHUNK_DURATION_SEC)
+CHUNK_DURATION_SEC = 0.02
+CHUNK_SIZE = math.ceil(fs * CHUNK_DURATION_SEC)
 TOTAL_CHUNKS = len(sig) // CHUNK_SIZE
-
+print(f"Total chunks: {TOTAL_CHUNKS}, chunk size: {CHUNK_SIZE} samples, chunk duration: {CHUNK_DURATION_SEC:.3f} seconds"   
+      )
 
 # Animation update function
 global_idx = 0
